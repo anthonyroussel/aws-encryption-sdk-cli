@@ -15,11 +15,11 @@ import base64
 import io
 import os
 import sys
+from unittest.mock import MagicMock, call, patch, sentinel
 
 import pytest
 import six
 from aws_encryption_sdk.materials_managers import CommitmentPolicy
-from mock import MagicMock, call, patch, sentinel
 from pytest_mock import mocker  # noqa pylint: disable=unused-import
 
 from aws_encryption_sdk_cli import BadUserArgumentError

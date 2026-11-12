@@ -12,8 +12,8 @@
 # language governing permissions and limitations under the License.
 """Unit test suite for aws_encryption_sdk.compatability."""
 import sys
+from unittest import mock
 
-import mock
 import pytest
 
 from aws_encryption_sdk_cli.compatability import _warn_deprecated_python

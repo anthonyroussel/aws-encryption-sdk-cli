@@ -13,10 +13,10 @@
 """Unit test suite for ``aws_encryption_sdk_cli.internal.master_key_parsing``."""
 import logging
 from collections import defaultdict, namedtuple
+from unittest.mock import MagicMock, call, sentinel
 
 import pytest
 import six
-from mock import MagicMock, call, sentinel
 from pytest_mock import mocker  # noqa pylint: disable=unused-import
 
 from aws_encryption_sdk_cli.exceptions import BadUserArgumentError

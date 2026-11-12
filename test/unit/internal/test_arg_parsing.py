@@ -15,11 +15,11 @@ import os
 import platform
 import re
 import shlex
+from unittest.mock import MagicMock, sentinel
 
 import aws_encryption_sdk
 import pytest
 from aws_encryption_sdk.materials_managers import CommitmentPolicy
-from mock import MagicMock, sentinel
 from pytest_mock import mocker  # noqa pylint: disable=unused-import
 
 import aws_encryption_sdk_cli

@@ -14,12 +14,12 @@
 import logging
 import os
 import shlex
+from unittest.mock import ANY, MagicMock, call, sentinel
 
 import aws_encryption_sdk
 import pytest
 import six
 from aws_encryption_sdk.materials_managers import CommitmentPolicy
-from mock import ANY, MagicMock, call, sentinel
 
 import aws_encryption_sdk_cli
 from aws_encryption_sdk_cli.exceptions import AWSEncryptionSDKCLIError, BadUserArgumentError
