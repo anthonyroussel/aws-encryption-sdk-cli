@@ -386,6 +386,28 @@ def test_parse_args_fail(args):
     assert excinfo.value.args == (2,)
 
 
+@pytest.mark.parametrize(
+    "actions",
+    (
+        "-e -d",
+        "-e --decrypt-unsigned",
+        "-d --decrypt-unsigned",
+        "-e --version",
+        "-d --version",
+        "--decrypt-unsigned --version",
+        "",
+    ),
+)
+def test_parse_args_exactly_one_operating_action(actions):
+    """--version, --encrypt, --decrypt and --decrypt-unsigned are mutually exclusive and one is required."""
+    args = "{} -S -i - -o - -w provider=ex_provider key=ex_mk_id".format(actions)
+
+    with pytest.raises(SystemExit) as excinfo:
+        arg_parsing.parse_args(shlex.split(args))
+
+    assert excinfo.value.args == (2,)
+
+
 def test_parse_args_wrapping_keys_required():
     args = "-d -S -o - -i -"
 
