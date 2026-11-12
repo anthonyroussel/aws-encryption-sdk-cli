@@ -9,7 +9,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.10', '3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
         include:
           - python-version: '3.10'
             tox-env: 'py310-examples'
@@ -17,6 +17,10 @@ jobs:
             tox-env: 'py311-examples'
           - python-version: '3.12'
             tox-env: 'py312-examples'
+          - python-version: '3.13'
+            tox-env: 'py313-examples'
+          - python-version: '3.14'
+            tox-env: 'py314-examples'
     permissions:
       id-token: write
       contents: read
@@ -51,7 +55,7 @@ jobs:
      
       # Python no longer bundles setuptools starting in 3.12
       - name: Install python version specific dependencies
-        if: matrix.python-version == '3.12'
+        if: contains(fromJSON('["3.12", "3.13", "3.14"]'), matrix.python-version)
         run: |
           pip install -r dev_requirements/ci-requirements.txt
           
