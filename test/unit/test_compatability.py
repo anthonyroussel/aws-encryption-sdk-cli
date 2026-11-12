@@ -12,6 +12,7 @@
 # language governing permissions and limitations under the License.
 """Unit test suite for aws_encryption_sdk.compatability."""
 import sys
+import warnings
 from unittest import mock
 
 import pytest
@@ -29,7 +30,8 @@ class TestWarnDeprecatedPython:
         with mock.patch.object(sys, "version_info") as v_info:
             v_info.major = 3
             v_info.minor = 7
-            with pytest.warns(None) as record:
+            with warnings.catch_warnings(record=True) as record:
+                warnings.simplefilter("always")
                 _warn_deprecated_python()
             assert len(record) == 0
 
