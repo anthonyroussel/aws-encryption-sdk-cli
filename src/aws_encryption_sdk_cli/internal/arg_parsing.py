@@ -176,14 +176,13 @@ def _build_parser():
 
     # For each argument added to this group, a dummy redirect argument must
     # be added to the parent parser for each long form option string.
-    version_or_action = parser.add_mutually_exclusive_group(required=True)
+    # Note: nested mutually exclusive groups are not supported (an error since Python 3.14),
+    # so --version and the operating actions share a single flat group.
+    operating_action = parser.add_mutually_exclusive_group(required=True)
 
-    version_or_action.add_argument("--version", action="version", version=_version_report())
+    operating_action.add_argument("--version", action="version", version=_version_report())
     parser.add_dummy_redirect_argument("--version")
 
-    # For each argument added to this group, a dummy redirect argument must
-    # be added to the parent parser for each long form option string.
-    operating_action = version_or_action.add_mutually_exclusive_group()
     operating_action.add_argument(
         "-e", "--encrypt", dest="action", action="store_const", const="encrypt", help="Encrypt data"
     )

@@ -15,11 +15,11 @@ import os
 import platform
 import re
 import shlex
+from unittest.mock import MagicMock, sentinel
 
 import aws_encryption_sdk
 import pytest
 from aws_encryption_sdk.materials_managers import CommitmentPolicy
-from mock import MagicMock, sentinel
 from pytest_mock import mocker  # noqa pylint: disable=unused-import
 
 import aws_encryption_sdk_cli
@@ -380,6 +380,28 @@ def test_dummy_arguments_covered():
     "args", build_bad_io_arguments() + build_bad_multiple_arguments() + build_bad_dummy_arguments()
 )
 def test_parse_args_fail(args):
+    with pytest.raises(SystemExit) as excinfo:
+        arg_parsing.parse_args(shlex.split(args))
+
+    assert excinfo.value.args == (2,)
+
+
+@pytest.mark.parametrize(
+    "actions",
+    (
+        "-e -d",
+        "-e --decrypt-unsigned",
+        "-d --decrypt-unsigned",
+        "-e --version",
+        "-d --version",
+        "--decrypt-unsigned --version",
+        "",
+    ),
+)
+def test_parse_args_exactly_one_operating_action(actions):
+    """--version, --encrypt, --decrypt and --decrypt-unsigned are mutually exclusive and one is required."""
+    args = "{} -S -i - -o - -w provider=ex_provider key=ex_mk_id".format(actions)
+
     with pytest.raises(SystemExit) as excinfo:
         arg_parsing.parse_args(shlex.split(args))
 

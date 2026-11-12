@@ -12,9 +12,9 @@
 # language governing permissions and limitations under the License.
 """Unit testing suite for ``aws_encryption_sdk_cli.internal.logging``."""
 import logging
+from unittest.mock import MagicMock, call, sentinel
 
 import pytest
-from mock import MagicMock, call, sentinel
 
 from aws_encryption_sdk_cli.internal import logging_utils
 
